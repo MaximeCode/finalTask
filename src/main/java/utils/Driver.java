@@ -24,6 +24,7 @@ public class Driver {
         return driver;
     }
     public static void toNull() {
+        Wait.toNull();
         driver = null;
     }
 }

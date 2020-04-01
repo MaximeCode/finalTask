@@ -28,7 +28,6 @@ public class Hooks {
     public void shutDown() {
         driver.quit();
         Driver.toNull();
-        Wait.toNull();
     }
 
     @Attachment

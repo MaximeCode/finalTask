@@ -25,13 +25,16 @@ public class CartPage extends BasePage {
 
     public void checkItems() {
         List<WebElement> items = new ArrayList<>();
-        Items
-                .items
-                .keySet()
-                .forEach(name -> items.add(driver.findElement(By.xpath("//span[text()='" + name + "']"))));
+        Items.items.keySet().forEach(name -> {
+                    try {
+                        items.add(waitVisible(By.xpath("//span[text()='" + name + "']")));
+                    } catch (Exception ignored) {
+                    }
+                });
         Assert.assertEquals("Не все добавленные ранее товары находятся в корзине",
-                Items.items.size(), items.size() );
-}
+                Items.items.size(), items.size());
+
+    }
 
     public void checkLabel() {
         int number = Integer.parseInt(cartLabel.findElement(

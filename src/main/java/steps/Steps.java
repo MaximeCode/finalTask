@@ -6,7 +6,6 @@ import pages.CartPage;
 import pages.MainPage;
 import pages.SearchPage;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static steps.Hooks.getData;
@@ -14,24 +13,32 @@ import static steps.Hooks.getData;
 
 public class Steps {
 
-    static BasePage pageObject;
-    BasePage page = new MainPage();
+    static BasePage pageObject; // для демонстрации Reflection API
+    static BasePage page;
 
     @Тогда("Выполнить поиск по {string}.")
-    public void выполнить_поиск_по(String keywords) throws InterruptedException {
+    public void выполнить_поиск_по(String keywords) {
+        page = new MainPage();
         page = page.search(keywords);
     }
 
     @Тогда("Ограничить цену до {int}.")
-    public void ограничить_цену_до(int price) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        Class example = Class.forName("pages.SearchPage");
-        pageObject = (BasePage) example.newInstance();
+    public void ограничить_цену_до(int price) {
+        try {
+            Class<?> example = Class.forName("pages.SearchPage");
+            pageObject = (BasePage) example.newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {}
         pageObject.input("максимальная цена", price);
     }
 
     @Тогда("Отметить чекбоксы:")
-    public void отметить_чекбоксы(List<String> keywords) throws InterruptedException {
+    public void отметить_чекбоксы(List<String> keywords) {
         keywords.forEach(element -> ((SearchPage) page).on(element));
+    }
+
+    @Тогда("Отметить бренды:")
+    public void отметить_бренды(List<String> keywords) throws InterruptedException {
+        keywords.forEach(element -> ((SearchPage) page).addBrand(element));
     }
 
     @Тогда("Добавить в корзину из результатов поиска {string} {string}.")
@@ -64,4 +71,5 @@ public class Steps {
     public void проверить_что_корзина_не_содержит_никаких_товаров() {
         ((CartPage) page).checkEmpty();
     }
+
 }
