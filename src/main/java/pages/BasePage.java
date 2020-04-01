@@ -52,7 +52,7 @@ public abstract class BasePage {
         WebElement element;
         try {
             element = waitClickable(getField(fieldName));
-            waitClickable(element).click();
+            element.click();
             element.sendKeys(String.valueOf(price) + Keys.ENTER);
         } catch (Exception e) {
             e.printStackTrace();

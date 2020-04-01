@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CartPage extends BasePage {
 
-    @FindBy(partialLinkText = "Ваша корзина")
+    @FindBy(xpath = "//span[contains(text(), 'Ваша корзина')]")
     WebElement cartLabel;
 
     @FindBy(xpath = "//span[contains(text(), 'Удалить выбранные')]")
@@ -34,8 +34,8 @@ public class CartPage extends BasePage {
 }
 
     public void checkLabel() {
-        int number = Integer.parseInt(waitVisible(cartLabel).findElement(
-                By.xpath(".//../span[contains(text(), " + Items.items.size() + "' товар')]"))
+        int number = Integer.parseInt(cartLabel.findElement(
+                By.xpath(".//../span[contains(text(), '" + Items.items.size() + " товар')]"))
                 .getText()
                 .replaceAll("товар.+", "")
                 .replaceAll("\\D", ""));

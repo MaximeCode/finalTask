@@ -13,7 +13,7 @@ public class TestProperties {
             properties = new Properties();
             try {
                 properties.load(new FileReader("src/main/resources/environment_"
-                        + System.getProperty("browser", "chrome") + ".properties"));
+                        + System.getProperty("browser", "firefox") + ".properties"));
             } catch (IOException e) {
                 System.out.println("Файл .properties не найден.");
             }
